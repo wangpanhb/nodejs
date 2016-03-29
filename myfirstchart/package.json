@@ -1,0 +1,23 @@
+{
+  "name": "wangpan",
+  "version": "0.0.2",
+  "description": "Minimalist multiroom chat server",
+  "dependencies": {
+    "socket.io": "~0.9.6",
+    "mime": "~1.2.7"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "\"type\":\"git\",\"url\":\"https://github.com/cibeidelang/nodejs.git\""
+  },
+  "author": "wangpan",
+  "license": "ISC",
+  "keywords": [
+    "5201314"
+  ]
+}
