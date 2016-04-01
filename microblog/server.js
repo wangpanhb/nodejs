@@ -8,6 +8,7 @@ var mime=require('mime');
 var cache={};
 
 //请求文件不存在时发送404错误
+/*
 function send404(response){
     response.writeHead(404,{'Content-Type':'text/plain'});
     response.write('Error 404:resource not found');
@@ -15,10 +16,14 @@ function send404(response){
 }
 //提供文件数据服务；
 function sendFile(response,filePath,fileContents){
-    response.writeHead(200,{"content-type":mime.lookup(path.basename(filePath))});
+    response.writeHead(
+        200,
+        {"content-type":mime.lookup(path.basename(filePath))}
+    );
     //mime.lookup()函数用于创建文件类型var mimeType = mime.lookup('image.gif'); //==> image/gif；
     //path.basename(p, [ext]),p为要处理的path,ext要过滤的字符
-    /*    var path= require("path");
+    */
+/*    var path= require("path");
         path.basename('/foo/bar/baz/asdf/quux.html')
     // returns
         'quux.html'
@@ -29,7 +34,8 @@ function sendFile(response,filePath,fileContents){
 
         var a = path.basename('/foo/bar/baz/asdf/', '.html');
     // returns
-        'asdf ' */
+        'asdf ' *//*
+
     response.end(fileContents);
 }
 
@@ -48,6 +54,8 @@ function serverStatic(response,cache,absPath){
                         sendFile(response,absPath,data);
                     }
                 });
+            }else{
+                send404(response);
             }
         });
     }
@@ -72,4 +80,60 @@ server.listen(3000,function(){
 
 var charServer=require('./chat/chat_server');
 charServer.listen(server);//启动socket.Io服务器，并将它提供给已经定义好的服务器
-//从而可以与http服务器共享一个端口
+//从而可以与http服务器共享一个端口*/
+function send404(response) {
+    response.writeHead(404, {'Content-Type': 'text/plain'});
+    response.write('Error 404: resource not found.');
+    response.end();
+}
+
+function sendFile(response, filePath, fileContents) {
+    response.writeHead(
+        200,
+        {"content-type": mime.lookup(path.basename(filePath))}
+    );
+    response.end(fileContents);
+}
+
+function serveStatic(response, cache, absPath) {
+    if (cache[absPath]) {
+        sendFile(response, absPath, cache[absPath]);
+    } else {
+        fs.exists(absPath, function(exists) {
+            if (exists) {
+                fs.readFile(absPath, function(err, data) {
+                    if (err) {
+                        send404(response);
+                    } else {
+                        cache[absPath] = data;
+                        sendFile(response, absPath, data);
+                    }
+                });
+            } else {
+                send404(response);
+            }
+        });
+    }
+}
+
+var server = http.createServer(function(request, response) {
+    var filePath = false;
+
+    if (request.url == '/') {
+        filePath = 'public/index.html';
+    } else {
+        filePath = 'public' + request.url;
+    }
+
+    var absPath = './' + filePath;
+    serveStatic(response, cache, absPath);
+});
+
+server.listen(3000, function() {
+    console.log("Server listening on port 3000.");
+});
+
+var chatServer = require('./lib/chat_server');
+chatServer.listen(server);
+
+

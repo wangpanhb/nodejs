@@ -1,14 +1,15 @@
 {
-  "name": "microblog",
+  "name": "wangpan",
   "version": "1.0.0",
   "description": "blog",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.13.4"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "wangpan",
   "license": "ISC",
