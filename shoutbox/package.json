@@ -1,0 +1,27 @@
+{
+  "name": "shoutbos",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "ejs": "*",
+    "bcrypt": "0.7.3",
+    "redis": "0.7.2"
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cibeidelang/nodejs.git"
+  },
+  "author": "wangpan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cibeidelang/nodejs/issues"
+  },
+  "homepage": "https://github.com/cibeidelang/nodejs#readme",
+  "description": ""
+}
