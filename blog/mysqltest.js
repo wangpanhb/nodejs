@@ -13,4 +13,5 @@ query("select * from student;",function(err,vals,fields){
         console.log(data.name);
         console.log(data.age);
     });
+    console.log(vals);
 });
